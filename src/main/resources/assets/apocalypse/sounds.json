@@ -1,0 +1,23 @@
+{
+  "shotgun_shoot": {
+    "subtitle": "sounds.apocalypse.shotgun_shoot",
+    "sounds": [
+      "apocalypse:shotgun_shoot"
+    ]
+  },
+  "shotgun_reload": {
+    "subtitle": "sounds.apocalypse.shotgun_reload",
+    "sounds": [
+      "apocalypse:shotgun_reload"
+    ]
+  },
+  "shotgun_hit": {
+    "subtitle": "sounds.apocalypse.shotgun_hit",
+    "sounds": [
+      "apocalypse:shotgun_hit1",
+      "apocalypse:shotgun_hit2",
+      "apocalypse:shotgun_hit3",
+      "apocalypse:shotgun_hit4"
+    ]
+  }
+}

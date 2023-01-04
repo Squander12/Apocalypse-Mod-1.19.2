@@ -1,0 +1,25 @@
+{
+  "variants": {
+    "bites=0": {
+      "model": "apocalypse:block/military_kit"
+    },
+    "bites=1": {
+      "model": "apocalypse:block/military_kit_slice1"
+    },
+    "bites=2": {
+      "model": "apocalypse:block/military_kit_slice2"
+    },
+    "bites=3": {
+      "model": "apocalypse:block/military_kit_slice3"
+    },
+    "bites=4": {
+      "model": "apocalypse:block/military_kit_slice4"
+    },
+    "bites=5": {
+      "model": "apocalypse:block/military_kit_slice5"
+    },
+    "bites=6": {
+      "model": "apocalypse:block/military_kit_slice6"
+    }
+  }
+}

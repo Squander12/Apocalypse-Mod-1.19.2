@@ -1,0 +1,21 @@
+{
+  "textures": {
+    "particle": "apocalypse:block/military_kit_side",
+    "bottom": "apocalypse:block/military_kit_bottom",
+    "top": "apocalypse:block/military_kit_top",
+    "side": "apocalypse:block/military_kit_side"
+  },
+  "elements": [
+    {   "from": [ 1, 0, 1 ],
+      "to": [ 15, 8, 15 ],
+      "faces": {
+        "down":  { "texture": "#bottom", "cullface": "down" },
+        "up":    { "texture": "#top" },
+        "north": { "texture": "#side" },
+        "south": { "texture": "#side" },
+        "west":  { "texture": "#side" },
+        "east":  { "texture": "#side" }
+      }
+    }
+  ]
+}

@@ -1,0 +1,6 @@
+{
+  "parent": "apocalypse:item/old_shotgun",
+  "textures": {
+    "layer0": "apocalypse:item/old_shotgun_pulling_2"
+  }
+}

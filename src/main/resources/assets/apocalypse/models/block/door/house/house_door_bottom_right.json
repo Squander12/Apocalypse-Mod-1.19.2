@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/door_bottom_right",
+  "textures": {
+    "bottom": "apocalypse:block/house_door_bottom",
+    "top": "apocalypse:block/house_door_top"
+  }
+}

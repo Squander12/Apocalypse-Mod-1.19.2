@@ -1,0 +1,42 @@
+{
+  "block.apocalypse.military_chest": "Military Chest",
+  "block.apocalypse.house_door": "House Door",
+  "block.apocalypse.steel_door": "Steel Door",
+  "block.apocalypse.store_door": "Store Door",
+  "block.apocalypse.medical_kit": "Medical Kit",
+
+  "item.apocalypse.old_shotgun": "Old Shotgun",
+  "item.apocalypse.crowbar": "Crowbar",
+  "item.apocalypse.katana": "Katana",
+
+  "item.apocalypse.shotgun_ammo": "Shotgun Ammo",
+  "item.apocalypse.old_world_money": "Old World Money",
+  "item.apocalypse.bag_of_gold": "Bag Of Money",
+  "item.apocalypse.old_coin": "Old Coin",
+  "item.apocalypse.radiation_suit_mask": "Radiation Suit Mask",
+  "item.apocalypse.radiation_suit_chest": "Radiation Suit Chest",
+  "item.apocalypse.radiation_suit_legs": "Radiation Suit Legs",
+  "item.apocalypse.radiation_suit_boots": "Radiation Suit Boots",
+
+  "item.apocalypse.lamps": "Lamps",
+  "item.apocalypse.blue_lamps": "Blue Lamps",
+  "item.apocalypse.broken_lamps": "Broken Lamps",
+  "item.apocalypse.air_filter": "Air Filter",
+  "item.apocalypse.green_integrated_circuit": "Green Integrated Circuit",
+  "item.apocalypse.blue_integrated_circuit": "Blue Integrated Circuit",
+
+  "sounds.apocalypse.shotgun_shoot": "Shotgun Shoot",
+  "sounds.apocalypse.shotgun_hit": "Shotgun Hit",
+  "sounds.apocalypse.shotgun_reload": "Shotgun Reload",
+
+  "container.apocalypse.military_chest": "Military Chest",
+  "military_chest.no_crowbar_message": "You must have a crowbar to open a Military Chest!",
+
+  "tradeItem.lore": "This item can be sell on local traders",
+  "tradeItem.lore_crafting": "It can also be used to craft items",
+
+  "key.apocalypse.reload": "Reload Gun",
+
+  "itemGroup.apocalypse": "Apocalypse Mod",
+  "itemGroup.apocalypse_trade": "Apocalypse Trade"
+}
