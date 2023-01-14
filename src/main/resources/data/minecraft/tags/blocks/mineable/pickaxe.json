@@ -1,6 +1,19 @@
 {
+  "replace": false,
   "values": [
     "apocalypse:steel_door",
-    "apocalypse:store_door"
+    "apocalypse:store_door",
+    "apocalypse:generator",
+    "apocalypse:white_bricks",
+    "apocalypse:white_brick_slab",
+    "apocalypse:white_brick_stairs",
+    "apocalypse:white_brick_wall",
+    "apocalypse:light_bricks",
+    "apocalypse:light_brick_slab",
+    "apocalypse:light_brick_stairs",
+    "apocalypse:light_brick_wall",
+    "apocalypse:light_mossy_bricks",
+    "apocalypse:light_mossy_brick_slab",
+    "apocalypse:light_mossy_brick_stairs"
   ]
 }

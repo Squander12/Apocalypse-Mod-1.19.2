@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "apocalypse:block/light_mossy_brick_slab"
+    },
+    "type=double": {
+      "model": "apocalypse:block/light_mossy_bricks"
+    },
+    "type=top": {
+      "model": "apocalypse:block/light_mossy_brick_slab_top"
+    }
+  }
+}

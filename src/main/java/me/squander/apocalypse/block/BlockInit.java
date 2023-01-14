@@ -21,11 +21,22 @@ public class BlockInit {
     public static RegistryObject<Block> STEEL_DOOR = register("steel_door", () -> new DoorBlock(BlockBehaviour.Properties.copy(Blocks.IRON_DOOR)));
     public static RegistryObject<Block> STORE_DOOR = register("store_door", () -> new DoorBlock(BlockBehaviour.Properties.copy(Blocks.IRON_DOOR)));
     public static RegistryObject<Block> MEDICAL_KIT = register("medical_kit", () -> new MedicalKitBlock(BlockBehaviour.Properties.copy(Blocks.CAKE)));
+    public static RegistryObject<Block> CABINET = register("cabinet", () -> new CabinetBlock(BlockBehaviour.Properties.copy(Blocks.DISPENSER)));
+
+    public static RegistryObject<Block> GENERATOR = register("generator", () -> new GeneratorBlock(BlockBehaviour.Properties.of(Material.METAL)));
 
     public static RegistryObject<Block> WHITE_BRICKS = register("white_bricks", () -> new Block(BlockBehaviour.Properties.copy(Blocks.BRICKS)));
     public static RegistryObject<Block> WHITE_BRICK_STAIRS = register("white_brick_stairs", () -> new StairBlock(() -> WHITE_BRICKS.get().defaultBlockState(), BlockBehaviour.Properties.copy(Blocks.BRICK_STAIRS)));
     public static RegistryObject<Block> WHITE_BRICK_SLAB = register("white_brick_slab", () -> new SlabBlock(BlockBehaviour.Properties.copy(Blocks.BRICK_SLAB)));
     public static RegistryObject<Block> WHITE_BRICK_WALL = register("white_brick_wall", () -> new WallBlock(BlockBehaviour.Properties.copy(Blocks.BRICK_WALL)));
+
+    public static RegistryObject<Block> LIGHT_BRICKS = register("light_bricks", () -> new Block(BlockBehaviour.Properties.copy(Blocks.BRICKS)));
+    public static RegistryObject<Block> LIGHT_BRICK_STAIRS = register("light_brick_stairs", () -> new StairBlock(() -> LIGHT_BRICKS.get().defaultBlockState(), BlockBehaviour.Properties.copy(Blocks.BRICK_STAIRS)));
+    public static RegistryObject<Block> LIGHT_BRICK_SLAB = register("light_brick_slab", () -> new SlabBlock(BlockBehaviour.Properties.copy(Blocks.BRICK_SLAB)));
+    public static RegistryObject<Block> LIGHT_BRICK_WALL = register("light_brick_wall", () -> new WallBlock(BlockBehaviour.Properties.copy(Blocks.BRICK_WALL)));
+    public static RegistryObject<Block> LIGHT_MOSSY_BRICKS = register("light_mossy_bricks", () -> new Block(BlockBehaviour.Properties.copy(Blocks.BRICKS)));
+    public static RegistryObject<Block> LIGHT_MOSSY_BRICK_STAIRS = register("light_mossy_brick_stairs", () -> new StairBlock(() -> LIGHT_MOSSY_BRICKS.get().defaultBlockState(), BlockBehaviour.Properties.copy(Blocks.BRICK_STAIRS)));
+    public static RegistryObject<Block> LIGHT_MOSSY_BRICK_SLAB = register("light_mossy_brick_slab", () -> new SlabBlock(BlockBehaviour.Properties.copy(Blocks.BRICK_SLAB)));
 
     private static <T extends Block> RegistryObject<T> register(String name, Supplier<T> supplier){
         RegistryObject<T> r = BLOCKS.register(name, supplier);

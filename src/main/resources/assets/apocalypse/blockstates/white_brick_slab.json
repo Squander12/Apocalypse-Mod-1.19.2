@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "apocalypse:block/white_brick_slab"
+    },
+    "type=double": {
+      "model": "apocalypse:block/white_bricks"
+    },
+    "type=top": {
+      "model": "apocalypse:block/white_brick_slab_top"
+    }
+  }
+}

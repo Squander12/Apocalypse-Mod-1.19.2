@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "apocalypse:block/cabinet",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "apocalypse:block/cabinet"
+    },
+    "facing=south": {
+      "model": "apocalypse:block/cabinet",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "apocalypse:block/cabinet",
+      "y": 270
+    }
+  }
+}

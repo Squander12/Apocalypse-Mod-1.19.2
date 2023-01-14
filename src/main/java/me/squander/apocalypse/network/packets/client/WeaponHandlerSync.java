@@ -32,8 +32,8 @@ public class WeaponHandlerSync extends Packet {
     }
 
     @Override
-    public boolean handle(Supplier<NetworkEvent.Context> ctx) {
-        ctx.get().enqueueWork(() -> {
+    public boolean handle(Supplier<NetworkEvent.Context> supplier) {
+        supplier.get().enqueueWork(() -> {
 
         });
         return true;

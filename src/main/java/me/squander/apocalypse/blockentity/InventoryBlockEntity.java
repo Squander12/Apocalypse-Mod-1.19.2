@@ -2,15 +2,22 @@ package me.squander.apocalypse.blockentity;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.MenuProvider;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
+import net.minecraftforge.common.util.LazyOptional;
+import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
+import org.jetbrains.annotations.NotNull;
 
-public abstract class InventoryBlockEntity extends BlockEntity {
+public abstract class InventoryBlockEntity extends BlockEntity implements MenuProvider {
     protected final ItemStackHandler handler = this.createHandler();
+    protected final LazyOptional<IItemHandler> itemOptional = LazyOptional.of(() -> this.handler);
 
     public InventoryBlockEntity(BlockEntityType<?> pType, BlockPos pPos, BlockState pBlockState) {
         super(pType, pPos, pBlockState);
@@ -42,6 +49,11 @@ public abstract class InventoryBlockEntity extends BlockEntity {
     }
 
     public abstract int getContainerSize();
+
+    @Override
+    public @NotNull <T> LazyOptional<T> getCapability(@NotNull Capability<T> cap) {
+        return ForgeCapabilities.ITEM_HANDLER.orEmpty(cap, this.itemOptional);
+    }
 
     @Override
     protected void saveAdditional(CompoundTag tag) {

@@ -4,6 +4,12 @@
   "block.apocalypse.steel_door": "Steel Door",
   "block.apocalypse.store_door": "Store Door",
   "block.apocalypse.medical_kit": "Medical Kit",
+  "block.apocalypse.white_bricks": "White Bricks",
+  "block.apocalypse.white_brick_stairs": "White Brick Stairs",
+  "block.apocalypse.white_brick_slab": "White Brick Slab",
+  "block.apocalypse.white_brick_wall": "White Brick Wall",
+  "block.apocalypse.generator": "Generator",
+  "block.apocalypse.cabinet": "Cabinet",
 
   "item.apocalypse.old_shotgun": "Old Shotgun",
   "item.apocalypse.crowbar": "Crowbar",
@@ -29,6 +35,13 @@
   "sounds.apocalypse.shotgun_hit": "Shotgun Hit",
   "sounds.apocalypse.shotgun_reload": "Shotgun Reload",
 
+  "skill.apocalypse.health_skill": "Health Skill",
+  "skill.apocalypse.strong_skill": "Strong Skill",
+  "skill.apocalypse.oxygen_skill": "Oxygen Skill",
+
+  "container.apocalypse.generator": "Generator",
+  "container.apocalypse.cabinet": "Cabinet",
+  "container.apocalypse.skill_menu": "Skill Menu",
   "container.apocalypse.military_chest": "Military Chest",
   "military_chest.no_crowbar_message": "You must have a crowbar to open a Military Chest!",
 

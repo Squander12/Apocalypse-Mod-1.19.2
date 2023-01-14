@@ -7,6 +7,7 @@ import me.squander.apocalypse.client.entity.MilitaryChestRender;
 import me.squander.apocalypse.client.key.KeyInit;
 import me.squander.apocalypse.entity.EntityTypeInit;
 import me.squander.apocalypse.network.PacketHandler;
+import me.squander.apocalypse.network.packets.server.OpenSkillScreenServer;
 import me.squander.apocalypse.network.packets.server.ReloadGunServer;
 import net.minecraft.client.renderer.Sheets;
 import net.minecraftforge.api.distmarker.Dist;
@@ -36,6 +37,7 @@ public class ClientEvent {
         @SubscribeEvent
         public static void onRegisterKey(RegisterKeyMappingsEvent event){
             event.register(KeyInit.RELOAD_KEY.get());
+            event.register(KeyInit.SKILL_SCREEN_KEY.get());
         }
 
         @SubscribeEvent
@@ -58,6 +60,10 @@ public class ClientEvent {
             if(event.phase == TickEvent.Phase.END){
                 while(KeyInit.RELOAD_KEY.get().consumeClick()){
                     PacketHandler.sendToServer(new ReloadGunServer());
+                }
+
+                while(KeyInit.SKILL_SCREEN_KEY.get().consumeClick()){
+                    PacketHandler.sendToServer(new OpenSkillScreenServer());
                 }
             }
         }

@@ -1,5 +1,6 @@
 package me.squander.apocalypse.item;
 
+import me.squander.apocalypse.helper.ClientHelper;
 import me.squander.apocalypse.helper.Helper;
 import me.squander.apocalypse.misc.ArmorMaterialInit;
 import net.minecraft.resources.ResourceLocation;
@@ -32,7 +33,7 @@ public class ArmorItemInit extends ArmorItem {
             @Override
             public void renderHelmetOverlay(ItemStack stack, Player player, int width, int height, float partialTick) {
                 if(material == ArmorMaterialInit.RADIATION_SUIT){
-                    Helper.renderTextureOverlay(MASK_BLUR, 1.0F, width, height);
+                    ClientHelper.renderTextureOverlay(MASK_BLUR, 1.0F, width, height);
                 }
             }
         });

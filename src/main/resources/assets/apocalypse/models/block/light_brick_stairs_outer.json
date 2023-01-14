@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/outer_stairs",
+  "textures": {
+    "bottom": "apocalypse:block/light_bricks",
+    "side": "apocalypse:block/light_bricks",
+    "top": "apocalypse:block/light_bricks"
+  }
+}

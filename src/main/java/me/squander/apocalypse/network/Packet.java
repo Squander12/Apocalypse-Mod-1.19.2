@@ -10,5 +10,5 @@ public abstract class Packet {
     protected Packet(){}
 
     public abstract void encode(FriendlyByteBuf buffer);
-    public abstract boolean handle(Supplier<NetworkEvent.Context> ctx);
+    public abstract boolean handle(Supplier<NetworkEvent.Context> supplier);
 }
