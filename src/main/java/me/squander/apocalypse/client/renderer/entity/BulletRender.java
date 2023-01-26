@@ -1,4 +1,4 @@
-package me.squander.apocalypse.client.entity;
+package me.squander.apocalypse.client.renderer.entity;
 
 import me.squander.apocalypse.entity.Bullet;
 import me.squander.apocalypse.helper.Helper;

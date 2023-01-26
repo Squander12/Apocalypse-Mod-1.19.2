@@ -3,7 +3,6 @@ package me.squander.apocalypse.item;
 import me.squander.apocalypse.capabilities.CapabilityInit;
 import me.squander.apocalypse.capabilities.WeaponHandler;
 import me.squander.apocalypse.entity.Bullet;
-import me.squander.apocalypse.helper.Helper;
 import me.squander.apocalypse.sound.SoundEventInit;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;

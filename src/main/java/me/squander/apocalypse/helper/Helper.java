@@ -1,15 +1,22 @@
 package me.squander.apocalypse.helper;
 
+import com.google.common.collect.Lists;
 import me.squander.apocalypse.ApocalypseMod;
-import me.squander.apocalypse.menu.BaseContainer;
+import net.minecraft.core.BlockPos;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.inventory.Slot;
-import net.minecraft.world.item.ArmorMaterial;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.entity.projectile.FireworkRocketEntity;
+import net.minecraft.world.item.*;
+import net.minecraft.world.level.Level;
+import net.minecraftforge.items.IItemHandler;
+
+import java.util.List;
 
 public class Helper {
 
@@ -17,20 +24,24 @@ public class Helper {
         return new ResourceLocation(ApocalypseMod.MODID, loc);
     }
 
-    public static Component makeGuiTranslationName(String loc){
+    public static MutableComponent makeGuiTranslationName(String loc){
         return Component.translatable("container.apocalypse." + loc);
     }
 
     public static String getArmorTextureLocation(ArmorMaterial armorMaterial, boolean legs){
         String s = getRc("textures/armor/" + armorMaterial.getName() + ".png").toString();
         String s1 = getRc("textures/armor/" + armorMaterial.getName() + "_legs.png").toString();
-        return legs ? s : s1;
+        return legs ? s1 : s;
     }
 
-    public static ItemStack findItemInPlayerInventory(Item item, Player player){
-        Inventory inventory = player.getInventory();
-        for (int i = 0; i < inventory.getContainerSize(); i++) {
-            ItemStack f = inventory.getItem(i);
+    public static double roundToDecPlace(double value, int precision){
+        int scale = (int) Math.pow(10, precision);
+        return (double) Math.round(value * scale) / scale;
+    }
+
+    public static ItemStack findItemInContainer(Item item, IItemHandler container){
+        for (int i = 0; i < container.getSlots(); i++) {
+            ItemStack f = container.getStackInSlot(i);
             if(item == f.getItem()){
                 return f;
             }
@@ -38,17 +49,22 @@ public class Helper {
         return ItemStack.EMPTY;
     }
 
-    public static void addInventory(BaseContainer baseContainer, Inventory inventory){
-        for(int i = 0; i < 3; ++i) {
-            for(int j = 0; j < 9; ++j) {
-                baseContainer.addSlot(new Slot(inventory, j + i * 9 + 9, 8 + j * 18, 84 + i * 18));
-            }
-        }
-    }
+    public static void createFirework(Level level, BlockPos pos, int power, FireworkRocketItem.Shape shape, DyeColor color){
+        ItemStack stack = new ItemStack(Items.FIREWORK_ROCKET);
+        CompoundTag mainTag = stack.getOrCreateTagElement("Fireworks");
+        CompoundTag subTag = new CompoundTag();
+        ListTag listTag = new ListTag();
+        List<Integer> colors = Lists.newArrayList();
 
-    public static void addHotbar(BaseContainer baseContainer, Inventory inventory){
-        for(int k = 0; k < 9; ++k) {
-            baseContainer.addSlot(new Slot(inventory, k, 8 + k * 18, 142));
-        }
+        colors.add(color.getFireworkColor());
+        mainTag.putByte("Flight", (byte) power <= 0 ? 1 : (byte) power);
+        subTag.putIntArray("Colors", colors);
+        subTag.putByte("Type", (byte) shape.getId());
+        listTag.add(subTag);
+
+        mainTag.put("Explosions", listTag);
+
+        FireworkRocketEntity fireworkRocket = new FireworkRocketEntity(level, pos.getX(), pos.getY(), pos.getZ(), stack);
+        level.addFreshEntity(fireworkRocket);
     }
 }

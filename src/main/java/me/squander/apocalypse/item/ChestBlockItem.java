@@ -1,6 +1,6 @@
 package me.squander.apocalypse.item;
 
-import me.squander.apocalypse.client.model.ChestItemRenderer;
+import me.squander.apocalypse.client.renderer.item.ChestItemRenderer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.world.item.BlockItem;

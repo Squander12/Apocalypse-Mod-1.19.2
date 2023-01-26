@@ -1,7 +1,6 @@
 package me.squander.apocalypse.menu;
 
 import me.squander.apocalypse.block.BlockInit;
-import me.squander.apocalypse.helper.Helper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Inventory;
@@ -29,8 +28,8 @@ public class GeneratorMenu extends BaseContainer {
         this.data = data;
 
         this.addSlot(new SlotItemHandler(handler, 0, 80, 48));
-        Helper.addInventory(this, inventory);
-        Helper.addHotbar(this, inventory);
+        this.addInventory(inventory);
+        this.addHotbar(inventory);
         this.addDataSlots(this.data);
     }
 

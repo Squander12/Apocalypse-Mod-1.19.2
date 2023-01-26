@@ -1,8 +1,6 @@
 package me.squander.apocalypse.network.packets.server;
 
 import me.squander.apocalypse.capabilities.CapabilityInit;
-import me.squander.apocalypse.helper.Helper;
-import me.squander.apocalypse.item.ItemInit;
 import me.squander.apocalypse.item.WeaponItem;
 import me.squander.apocalypse.network.Packet;
 import me.squander.apocalypse.network.PacketHandler;
@@ -13,6 +11,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraftforge.items.wrapper.InvWrapper;
 import net.minecraftforge.network.NetworkDirection;
 import net.minecraftforge.network.NetworkEvent;
 
@@ -31,14 +30,12 @@ public class ReloadGunServer extends Packet {
         ctx.enqueueWork(() -> {
             ServerPlayer player = ctx.getSender();
             ServerLevel level = ctx.getSender().getLevel();
-            ItemStack stack = player.getMainHandItem();
-            ItemStack ammo = Helper.findItemInPlayerInventory(ItemInit.SHOTGUN_AMMO.get(), player);
-            boolean flag = !stack.isEmpty() && !ammo.isEmpty();
+            ItemStack gun = player.getMainHandItem();
 
-            if(stack.getItem() instanceof WeaponItem && flag){
-                stack.getCapability(CapabilityInit.WEAPON_HANDLER_CAPABILITY).ifPresent(data -> {
-                    data.reload(ammo);
-                    level.playSound((Player)null, player.getX(), player.getY(), player.getZ(), SoundEventInit.SHOTGUN_RELOAD.get(), SoundSource.PLAYERS, 1.0F, 1.0F );
+            if(gun.getItem() instanceof WeaponItem && !gun.isEmpty()){
+                gun.getCapability(CapabilityInit.WEAPON_HANDLER_CAPABILITY).ifPresent(data -> {
+                    if(data.reload(new InvWrapper(player.getInventory())))
+                        level.playSound((Player)null, player.getX(), player.getY(), player.getZ(), SoundEventInit.SHOTGUN_RELOAD.get(), SoundSource.PLAYERS, 1.0F, 1.0F );
                 });
             }
         });

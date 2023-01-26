@@ -3,6 +3,7 @@ package me.squander.apocalypse.client.screen;
 import com.mojang.blaze3d.vertex.PoseStack;
 import me.squander.apocalypse.capabilities.CapabilityInit;
 import me.squander.apocalypse.capabilities.PlayerHandler;
+import me.squander.apocalypse.client.key.KeyInit;
 import me.squander.apocalypse.client.screen.widget.SkillButton;
 import me.squander.apocalypse.helper.ClientHelper;
 import me.squander.apocalypse.helper.Helper;
@@ -17,8 +18,12 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class SkillScreen extends AbstractContainerScreen<SkillMenu> {
     private final ResourceLocation TEXTURE = Helper.getRc("textures/gui/skill_menu.png");
+    private final List<SkillButton> buttons = new ArrayList<>();
     private final Player player = Minecraft.getInstance().player;
     private final int FONT_COLOR = 4210752;
     private int xPos;
@@ -33,9 +38,16 @@ public class SkillScreen extends AbstractContainerScreen<SkillMenu> {
         super.init();
         this.xPos = (width - imageWidth) / 2;
         this.yPos = (height - imageHeight) / 2;
-        this.addRenderableWidget(new SkillButton(this, this.getSkill(SkillsInit.HEALTH_SKILL.get()), this.xPos + 105, this.yPos + 45));
-        this.addRenderableWidget(new SkillButton(this, this.getSkill(SkillsInit.STRONG_SKILL.get()), this.xPos + 105, this.yPos + 70));
-        this.addRenderableWidget(new SkillButton(this, this.getSkill(SkillsInit.OXYGEN_SKILL.get()), this.xPos + 105, this.yPos + 95, false));
+
+        addSkillButton(new SkillButton(this, this.getSkill(SkillsInit.HEALTH_SKILL.get()), this.xPos + 32, this.yPos + 144));
+        addSkillButton(new SkillButton(this, this.getSkill(SkillsInit.STRONG_SKILL.get()), this.xPos + 64, this.yPos + 144));
+        addSkillButton(new SkillButton(this, this.getSkill(SkillsInit.OXYGEN_SKILL.get()), this.xPos + 96, this.yPos + 144, false));
+        addSkillButton(new SkillButton(this, this.getSkill(SkillsInit.EXPERIENCE_SKILL.get()), this.xPos + 128, this.yPos + 144));
+    }
+
+    private void addSkillButton(SkillButton btn){
+        this.addRenderableWidget(btn);
+        this.buttons.add(btn);
     }
 
     @Override
@@ -51,7 +63,7 @@ public class SkillScreen extends AbstractContainerScreen<SkillMenu> {
 
     private int getExpBarProgress(){
         int exp = this.getHandler().getCurrentExp();
-        int maxExp = this.getHandler().getMaxExp();
+        int maxExp = this.getHandler().getExpRequiredToNextLevel();
         int barSize = 162;
         return exp * barSize / maxExp;
     }
@@ -66,14 +78,22 @@ public class SkillScreen extends AbstractContainerScreen<SkillMenu> {
 
     @Override
     protected void renderLabels(PoseStack pPoseStack, int pMouseX, int pMouseY) {
+        for(SkillButton btn : this.buttons){
+            if(!btn.isHoveredOrFocused()) continue;
+            btn.renderToolTip(pPoseStack, pMouseX - this.xPos, pMouseY - this.yPos);
+            break;
+        }
+
         int level = this.getHandler().getLevel();
         int exp = this.getHandler().getCurrentExp();
-        int maxExp = this.getHandler().getMaxExp();
+        int maxExp = this.getHandler().getExpRequiredToNextLevel();
         int skillPoints = this.getHandler().getSkillPoints();
 
+        int i = this.font.width("" + exp);
+
         this.font.draw(pPoseStack, Component.literal("Level: " + level), 8, 17, FONT_COLOR);
-        this.font.draw(pPoseStack, Component.literal("Skill Points: " + skillPoints), 8, 122, FONT_COLOR);
-        this.font.draw(pPoseStack, Component.literal("Exp: " + exp + "/" + maxExp), 105, 17, FONT_COLOR);
+        this.font.draw(pPoseStack, Component.literal("Exp: " + exp + "/" + maxExp), 115 - i , 17, FONT_COLOR);
+        this.font.draw(pPoseStack, Component.literal("Skill Points: " + skillPoints), 65, 42, FONT_COLOR);
         this.font.draw(pPoseStack, this.title, (float)this.titleLabelX, (float)this.titleLabelY, FONT_COLOR);
     }
 
@@ -82,5 +102,16 @@ public class SkillScreen extends AbstractContainerScreen<SkillMenu> {
         renderBackground(pPoseStack);
         super.render(pPoseStack, pMouseX, pMouseY, pPartialTick);
         renderTooltip(pPoseStack, pMouseX, pMouseY);
+    }
+
+    @Override
+    public boolean keyPressed(int pKeyCode, int pScanCode, int pModifiers) {
+        if(KeyInit.SKILL_SCREEN_KEY.get().matches(pKeyCode, pScanCode)){
+            this.minecraft.setScreen(null);
+            this.minecraft.mouseHandler.grabMouse();
+            return true;
+        }else{
+            return super.keyPressed(pKeyCode, pScanCode, pModifiers);
+        }
     }
 }

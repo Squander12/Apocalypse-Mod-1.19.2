@@ -1,11 +1,13 @@
 package me.squander.apocalypse.skill;
 
-import me.squander.apocalypse.ApocalypseMod;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 
+import java.util.List;
 import java.util.UUID;
 
 public class HealthSkill extends Skill {
@@ -22,7 +24,12 @@ public class HealthSkill extends Skill {
         }
 
         instance.addPermanentModifier(modifier);
-        ApocalypseMod.LOGGER.info("HEALTH: " + instance.getValue());
+    }
+
+    @Override
+    public void getToolTip(List<Component> tip) {
+        tip.add(Component.literal("Each next level of this skill,"));
+        tip.add(Component.literal("increases your health level by 20%"));
     }
 
     @Override

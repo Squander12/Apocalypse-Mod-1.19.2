@@ -1,7 +1,6 @@
 package me.squander.apocalypse.menu;
 
 import me.squander.apocalypse.block.BlockInit;
-import me.squander.apocalypse.helper.Helper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Inventory;
@@ -30,8 +29,8 @@ public class CabinetMenu extends BaseContainer{
             }
         }
 
-        Helper.addHotbar(this, inventory);
-        Helper.addInventory(this, inventory);
+        this.addInventory(inventory);
+        this.addHotbar(inventory);
     }
 
     @Override

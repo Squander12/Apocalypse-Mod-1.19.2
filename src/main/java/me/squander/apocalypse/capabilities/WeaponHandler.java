@@ -1,6 +1,7 @@
 package me.squander.apocalypse.capabilities;
 
-import me.squander.apocalypse.ApocalypseMod;
+import me.squander.apocalypse.helper.Helper;
+import me.squander.apocalypse.item.ItemInit;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.item.ItemStack;
@@ -8,6 +9,7 @@ import net.minecraftforge.common.capabilities.AutoRegisterCapability;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilitySerializable;
 import net.minecraftforge.common.util.LazyOptional;
+import net.minecraftforge.items.IItemHandler;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -30,17 +32,17 @@ public class WeaponHandler implements ICapabilitySerializable<CompoundTag> {
         this.currentAmmo -= value;
     }
 
-    public void reload(ItemStack ammoToReload){
-        int i = this.maxAmmo - currentAmmo;
-        if(this.currentAmmo == this.maxAmmo) return;
+    public boolean reload(IItemHandler container){
+        if(this.currentAmmo == this.maxAmmo) return false;
 
-        if(ammoToReload.getCount() >= this.maxAmmo){
-            this.currentAmmo += i;
-            ammoToReload.shrink(i);
-        }else{
-            this.currentAmmo += ammoToReload.getCount();
-            ammoToReload.shrink(ammoToReload.getCount());
+        while(this.currentAmmo < this.maxAmmo){
+            ItemStack ammoToReload = Helper.findItemInContainer(ItemInit.SHOTGUN_AMMO.get(), container);
+            if(ammoToReload.getCount() > 0){
+                this.currentAmmo += 1;
+                ammoToReload.shrink(1);
+            }
         }
+        return true;
     }
 
     @Override

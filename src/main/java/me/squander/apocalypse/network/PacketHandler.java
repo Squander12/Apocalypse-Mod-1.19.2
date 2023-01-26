@@ -2,8 +2,7 @@ package me.squander.apocalypse.network;
 
 import me.squander.apocalypse.helper.Helper;
 import me.squander.apocalypse.network.packets.client.PlayerHandlerSync;
-import me.squander.apocalypse.network.packets.client.WeaponHandlerSync;
-import me.squander.apocalypse.network.packets.server.AddSkillLevelServer;
+import me.squander.apocalypse.network.packets.server.AddLevelSkillServer;
 import me.squander.apocalypse.network.packets.server.OpenSkillScreenServer;
 import me.squander.apocalypse.network.packets.server.ReloadGunServer;
 import net.minecraft.server.level.ServerPlayer;
@@ -23,10 +22,9 @@ public class PacketHandler {
     public static void register(){
         int id = 0;
         ReloadGunServer.register(id++);
-        WeaponHandlerSync.register(id++);
         OpenSkillScreenServer.register(id++);
         PlayerHandlerSync.register(id++);
-        AddSkillLevelServer.register(id++);
+        AddLevelSkillServer.register(id++);
     }
 
     public static <MSG> void sendToServer(MSG message){

@@ -1,13 +1,18 @@
 package me.squander.apocalypse.helper;
 
 import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.BufferBuilder;
-import com.mojang.blaze3d.vertex.DefaultVertexFormat;
-import com.mojang.blaze3d.vertex.Tesselator;
-import com.mojang.blaze3d.vertex.VertexFormat;
+import com.mojang.blaze3d.vertex.*;
+import me.squander.apocalypse.capabilities.CapabilityInit;
+import me.squander.apocalypse.capabilities.PlayerHandler;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.Font;
 import net.minecraft.client.renderer.GameRenderer;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraftforge.client.event.ScreenEvent;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.phys.EntityHitResult;
+import net.minecraft.world.phys.HitResult;
 
 public class ClientHelper {
 
@@ -40,5 +45,10 @@ public class ClientHelper {
         RenderSystem.depthMask(true);
         RenderSystem.enableDepthTest();
         RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
+    }
+
+    public static void playerHandlerSync(PlayerHandler handler){
+        Player player = Minecraft.getInstance().player;
+        player.getCapability(CapabilityInit.PLAYER_DATA).ifPresent(data -> data.copy(handler));
     }
 }

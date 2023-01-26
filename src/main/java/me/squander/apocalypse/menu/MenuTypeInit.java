@@ -15,6 +15,7 @@ public class MenuTypeInit {
     public static RegistryObject<MenuType<GeneratorMenu>> GENERATOR = register("generator", GeneratorMenu::new);
     public static RegistryObject<MenuType<CabinetMenu>> CABINET = register("cabinet", CabinetMenu::new);
     public static RegistryObject<MenuType<SkillMenu>> SKILL = register("skill", SkillMenu::new);
+    public static RegistryObject<MenuType<BackpackMenu>> BACKPACK = register("backpack", BackpackMenu::new);
 
     private static <T extends AbstractContainerMenu> RegistryObject<MenuType<T>> register(String name, IContainerFactory<T> factory){
         return MENU.register(name, () -> IForgeMenuType.create(factory));

@@ -3,13 +3,18 @@ package me.squander.apocalypse.capabilities;
 import me.squander.apocalypse.helper.Helper;
 import me.squander.apocalypse.skill.Skill;
 import me.squander.apocalypse.skill.SkillsInit;
+import net.minecraft.ChatFormatting;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.DyeColor;
+import net.minecraft.world.item.FireworkRocketItem;
 import net.minecraftforge.common.capabilities.AutoRegisterCapability;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilitySerializable;
@@ -26,7 +31,6 @@ public class PlayerHandler implements ICapabilitySerializable<CompoundTag> {
     public static final Component SKILL_MENU_NAME = Helper.makeGuiTranslationName("skill_menu");
     private final LazyOptional<PlayerHandler> lazyOptional = LazyOptional.of(() -> this);
     private List<Skill> skills = new ArrayList<>();
-    private int maxExp;
     private int currentExp;
     private int level;
     private int lastLevel;
@@ -34,27 +38,36 @@ public class PlayerHandler implements ICapabilitySerializable<CompoundTag> {
 
     public PlayerHandler() {
         this.skills.addAll(SkillsInit.SKILLS_REGISTRY.get().getValues());
-        this.maxExp = this.checkLevelToExp();
         this.level = 1;
-        this.lastLevel = level;
     }
 
-    public void tick(){
-        if(this.currentExp >= this.maxExp){
-            this.currentExp = 0;
-            this.level += 1;
-            this.maxExp = this.checkLevelToExp();
-        }
-
-        if(this.lastLevel != this.level){
-            this.skillPoints += 1;
+    public void tick(Player player){
+        if(this.lastLevel != this.level && !(this.level < this.lastLevel)){
+            this.applause(player);
         }
 
         this.lastLevel = this.level;
     }
 
+    public void applause(Player player){
+        Component levelTxt = Component.literal("" + this.level).withStyle(ChatFormatting.BOLD, ChatFormatting.GOLD);
+        Component playerTxt = Component.literal("" + player.getDisplayName()).withStyle(ChatFormatting.BOLD, ChatFormatting.RED);
+
+        for(ServerPlayer p : player.getServer().getPlayerList().getPlayers()){
+            if(p == player) continue;
+            p.sendSystemMessage(Component.translatable("player_handler.applause", playerTxt, levelTxt).withStyle(ChatFormatting.DARK_GREEN));
+        }
+
+        player.displayClientMessage(Component.translatable("player_handler.applause.single", levelTxt).withStyle(ChatFormatting.DARK_GREEN), false);
+        Helper.createFirework(player.getLevel(), player.getOnPos().above(), 1, FireworkRocketItem.Shape.LARGE_BALL, DyeColor.PURPLE);
+    }
+
     public List<Skill> getSkills() {
         return this.skills;
+    }
+
+    public void setSkills(List<Skill> skills){
+        this.skills = skills;
     }
 
     public Optional<Skill> getSkill(Skill skill){
@@ -71,11 +84,33 @@ public class PlayerHandler implements ICapabilitySerializable<CompoundTag> {
     }
 
     public void addExp(int amount){
-        this.currentExp += amount;
+        this.addExp(amount, false);
     }
 
-    public int getMaxExp() {
-        return this.maxExp;
+    public void addExp(int amount, boolean ignoreExpSkill){
+        Skill expSkill = this.getSkill(SkillsInit.EXPERIENCE_SKILL.get()).get();
+
+        if(expSkill.canBeUsed() && !ignoreExpSkill){
+            double i = expSkill.getLevel() * 10;
+            double percent = amount + ((i / 100) * amount);
+            this.currentExp += percent;
+        }else{
+            this.currentExp += amount;
+        }
+
+        while(this.currentExp >= this.getExpRequiredToNextLevel()) {
+            this.currentExp = this.currentExp - this.getExpRequiredToNextLevel();
+            this.addLevel(1);
+            this.addSkillPoints(1);
+        }
+    }
+
+    public void addLevel(int amount){
+        this.setLevel(this.getLevel() + amount);
+    }
+
+    public void addSkillPoints(int amount){
+        this.setSkillPoints(this.getSkillPoints() + amount);
     }
 
     public int getCurrentExp() {
@@ -86,24 +121,22 @@ public class PlayerHandler implements ICapabilitySerializable<CompoundTag> {
         return this.level;
     }
 
-    public void setMaxExp(int maxExp) {
-        this.maxExp = maxExp;
-    }
-
     public void setCurrentExp(int currentExp) {
         this.currentExp = currentExp;
     }
 
     public void setLevel(int level) {
-        this.level = level;
+        this.level = Mth.clamp(level, 1, Integer.MAX_VALUE);
+
+        if(this.level < 1){
+            this.level = 1;
+            this.currentExp = 0;
+            this.skillPoints = 0;
+        }
     }
 
     public int getLastLevel() {
         return this.lastLevel;
-    }
-
-    public void setLastLevel(int lastLevel) {
-        this.lastLevel = lastLevel;
     }
 
     public int getSkillPoints() {
@@ -111,10 +144,10 @@ public class PlayerHandler implements ICapabilitySerializable<CompoundTag> {
     }
 
     public void setSkillPoints(int skillPoints) {
-        this.skillPoints = skillPoints;
+        this.skillPoints = Mth.clamp(skillPoints, 0, Integer.MAX_VALUE);
     }
 
-    public int checkLevelToExp(){
+    public int getExpRequiredToNextLevel(){
         if(this.level >= 25){
             return 3000;
         }else if(this.level >= 20){
@@ -131,18 +164,14 @@ public class PlayerHandler implements ICapabilitySerializable<CompoundTag> {
     public void reset(Player player){
         this.level = 1;
         this.currentExp = 0;
-        this.maxExp = this.checkLevelToExp();
-        this.skills.forEach(x -> x.reset(player));
-        this.lastLevel = 1;
+        this.skills.forEach(skill -> skill.reset(player));
         this.skillPoints = 0;
     }
 
     public void copy(PlayerHandler handler){
         this.level = handler.level;
         this.currentExp = handler.currentExp;
-        this.maxExp = handler.maxExp;
         this.skills = handler.skills;
-        this.lastLevel = handler.lastLevel;
         this.skillPoints = handler.skillPoints;
     }
 
@@ -163,7 +192,6 @@ public class PlayerHandler implements ICapabilitySerializable<CompoundTag> {
         }
 
         tag.put("Skills", listTag);
-        tag.putInt("MaxExp", this.maxExp);
         tag.putInt("CurrentExp", this.currentExp);
         tag.putInt("Level", this.level);
         tag.putInt("LastLevel", this.lastLevel);
@@ -182,9 +210,8 @@ public class PlayerHandler implements ICapabilitySerializable<CompoundTag> {
         }
 
         this.level = tag.getInt("Level");
-        this.currentExp = tag.getInt("CurrentExp");
-        this.maxExp = tag.getInt("MaxExp");
         this.lastLevel = tag.getInt("LastLevel");
+        this.currentExp = tag.getInt("CurrentExp");
         this.skillPoints = tag.getInt("SkillPoints");
     }
 }

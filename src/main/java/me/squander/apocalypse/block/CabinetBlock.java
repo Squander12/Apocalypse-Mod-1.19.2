@@ -36,7 +36,7 @@ public class CabinetBlock extends BaseBlock implements EntityBlock {
         if(!state.is(newState.getBlock())) {
             BlockEntity entity = level.getBlockEntity(pos);
             if(entity instanceof CabinetBlockEntity c){
-                Containers.dropContents(level, pos, c.container());
+                Containers.dropContents(level, pos, c);
             }
         }
         super.onRemove(state, level, pos, newState, pIsMoving);

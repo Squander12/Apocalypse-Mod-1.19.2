@@ -1,4 +1,4 @@
-package me.squander.apocalypse.client.entity;
+package me.squander.apocalypse.client.renderer.block;
 
 import me.squander.apocalypse.blockentity.MilitaryChestBlockEntity;
 import me.squander.apocalypse.helper.Helper;

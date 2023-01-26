@@ -1,4 +1,4 @@
-package me.squander.apocalypse.client.model;
+package me.squander.apocalypse.client.renderer.item;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import me.squander.apocalypse.block.BlockInit;

@@ -11,7 +11,7 @@ import java.util.function.Supplier;
 
 public enum ArmorMaterialInit implements ArmorMaterial {
     RADIATION_SUIT("radiation_suit", 0, new int[]{0, 0, 0, 0}, 0, SoundEvents.ARMOR_EQUIP_LEATHER, 0.3F, 0.0F, () -> Ingredient.EMPTY),
-    MILITARY_ARMOR("military_armor", 0, new int[]{0, 0, 0, 0}, 0, SoundEvents.ARMOR_EQUIP_NETHERITE, 0.3F, 0.0F, () -> Ingredient.EMPTY);
+    MILITARY_ARMOR("military_armor", 41, new int[]{5, 8, 10, 5}, 20, SoundEvents.ARMOR_EQUIP_NETHERITE, 4.0F, 0.3F, () -> Ingredient.EMPTY);
 
     private static final int[] HEALTH_PER_SLOT = new int[]{13, 15, 16, 11};
     private final String name;

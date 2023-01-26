@@ -2,7 +2,7 @@ package me.squander.apocalypse.client.screen.widget;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import me.squander.apocalypse.network.PacketHandler;
-import me.squander.apocalypse.network.packets.server.AddSkillLevelServer;
+import me.squander.apocalypse.network.packets.server.AddLevelSkillServer;
 import me.squander.apocalypse.skill.Skill;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
@@ -32,7 +32,7 @@ public class SkillButton extends AbstractButton {
 
     @Override
     public void onPress() {
-        PacketHandler.sendToServer(new AddSkillLevelServer(this.skill.getName(), this.skill.getLevel(), this.skill.getMaxLevel()));
+        PacketHandler.sendToServer(new AddLevelSkillServer(this.skill.getResourceLocation()));
     }
 
     @Override //From ExtendedButton
@@ -50,10 +50,6 @@ public class SkillButton extends AbstractButton {
             buttonText = Component.literal(mc.font.substrByWidth(buttonText, width - 6 - ellipsisWidth).getString() + "...");
 
         drawCenteredString(poseStack, mc.font, buttonText, this.x + this.width / 2, this.y + (this.height - 8) / 2, getFGColor());
-
-        if(this.isHoveredOrFocused()){
-            this.renderToolTip(poseStack, pMouseX, pMouseY);
-        }
     }
 
     @Override
@@ -66,9 +62,9 @@ public class SkillButton extends AbstractButton {
         List<Component> lore = new ArrayList<>();
 
         if(this.isActive()){
-            lore.add(this.skill.getTranslatableName());
+            lore.add(this.skill.getTranslatableName().withStyle(ChatFormatting.GOLD, ChatFormatting.BOLD));
+            lore.add(Component.literal("Level: " + this.skill.getLevel() + "/" + this.skill.getMaxLevel()).withStyle(ChatFormatting.BOLD));
             this.skill.getToolTip(lore);
-            lore.add(Component.literal("Level: " + this.skill.getLevel() + "/" + this.skill.getMaxLevel()));
         }else{
             lore.add(Component.literal("INACTIVE").withStyle(ChatFormatting.DARK_RED));
         }

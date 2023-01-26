@@ -6,6 +6,7 @@ import me.squander.apocalypse.helper.ClientHelper;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.sounds.SoundManager;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 
@@ -46,6 +47,10 @@ public class EnergyWidget extends AbstractWidget {
 
         Component text = Component.literal(this.energy.getFirst().getAsInt() + "/" + this.energy.getSecond().getAsInt() + " FE");
         this.screen.renderTooltip(poseStack, text, pMouseX, pMouseY);
+    }
+
+    @Override
+    public void playDownSound(SoundManager manager) {
     }
 
     public int getEnergyHeight(){

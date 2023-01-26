@@ -2,6 +2,7 @@ package me.squander.apocalypse.skill;
 
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Player;
@@ -12,19 +13,17 @@ import java.util.Objects;
 
 public class Skill implements INBTSerializable<CompoundTag> {
     private int level;
-    private int maxLevel;
 
     public Skill() {
-        this.maxLevel = 5;
         this.level = 0;
     }
 
-    public ResourceLocation getName(){
+    public ResourceLocation getResourceLocation(){
         return Objects.requireNonNull(SkillsInit.SKILLS_REGISTRY.get().getKey(this));
     }
 
-    public Component getTranslatableName(){
-        return Component.translatable("skill.apocalypse." + SkillsInit.SKILLS_REGISTRY.get().getKey(this).getPath());
+    public MutableComponent getTranslatableName(){
+        return Component.translatable("skill.apocalypse." + this.getResourceLocation().getPath());
     }
 
     public void reset(Player player){
@@ -50,7 +49,6 @@ public class Skill implements INBTSerializable<CompoundTag> {
 
     public void copy(Skill skill){
         this.level = skill.level;
-        this.maxLevel = skill.maxLevel;
     }
 
     public int getLevel(){
@@ -58,15 +56,11 @@ public class Skill implements INBTSerializable<CompoundTag> {
     }
 
     public int getMaxLevel(){
-        return this.maxLevel;
+        return 5;
     }
 
     public void setLevel(int level) {
         this.level = level;
-    }
-
-    public void setMaxLevel(int maxLevel) {
-        this.maxLevel = maxLevel;
     }
 
     public boolean canBeUsed(){
@@ -77,13 +71,11 @@ public class Skill implements INBTSerializable<CompoundTag> {
     public CompoundTag serializeNBT() {
         CompoundTag tag = new CompoundTag();
         tag.putInt("Level", this.level);
-        tag.putInt("MaxLevel", this.maxLevel);
         return tag;
     }
 
     @Override
     public void deserializeNBT(CompoundTag tag) {
         this.level = tag.getInt("Level");
-        this.maxLevel = tag.getInt("MaxLevel");
     }
 }

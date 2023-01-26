@@ -8,9 +8,10 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraftforge.items.wrapper.InvWrapper;
 import org.jetbrains.annotations.Nullable;
 
-public class CabinetBlockEntity extends InventoryBlockEntity {
+public class CabinetBlockEntity extends LootTableBlockEntity {
     public CabinetBlockEntity(BlockPos pPos, BlockState pBlockState) {
         super(BlockEntityInit.CABINET.get(), pPos, pBlockState);
     }
@@ -21,13 +22,12 @@ public class CabinetBlockEntity extends InventoryBlockEntity {
     }
 
     @Override
-    public Component getDisplayName() {
+    protected Component getDefaultName() {
         return Helper.makeGuiTranslationName("cabinet");
     }
 
-    @Nullable
     @Override
-    public AbstractContainerMenu createMenu(int containerId, Inventory inventory, Player player) {
-        return new CabinetMenu(containerId, inventory, this.handler, this.getBlockPos());
+    protected AbstractContainerMenu createMenu(int pContainerId, Inventory pInventory) {
+        return new CabinetMenu(pContainerId, pInventory, new InvWrapper(this), this.getBlockPos());
     }
 }

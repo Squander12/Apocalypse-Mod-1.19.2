@@ -15,5 +15,6 @@ public class SkillsInit {
 
     public static RegistryObject<Skill> HEALTH_SKILL = SKILLS.register("health_skill", HealthSkill::new);
     public static RegistryObject<Skill> STRONG_SKILL = SKILLS.register("strong_skill", StrongSkill::new);
-    public static RegistryObject<Skill> OXYGEN_SKILL = SKILLS.register("oxygen_skill", StrongSkill::new);
+    public static RegistryObject<Skill> OXYGEN_SKILL = SKILLS.register("oxygen_skill", Skill::new);
+    public static RegistryObject<Skill> EXPERIENCE_SKILL = SKILLS.register("experience_skill", Skill::new);
 }

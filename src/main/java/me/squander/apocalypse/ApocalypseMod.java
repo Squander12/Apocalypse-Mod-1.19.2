@@ -3,6 +3,7 @@ package me.squander.apocalypse;
 import com.mojang.logging.LogUtils;
 import me.squander.apocalypse.block.BlockInit;
 import me.squander.apocalypse.blockentity.BlockEntityInit;
+import me.squander.apocalypse.client.screen.BackpackScreen;
 import me.squander.apocalypse.client.screen.CabinetScreen;
 import me.squander.apocalypse.client.screen.GeneratorScreen;
 import me.squander.apocalypse.client.screen.SkillScreen;
@@ -49,6 +50,7 @@ public class ApocalypseMod {
             MenuScreens.register(MenuTypeInit.GENERATOR.get(), GeneratorScreen::new);
             MenuScreens.register(MenuTypeInit.CABINET.get(), CabinetScreen::new);
             MenuScreens.register(MenuTypeInit.SKILL.get(), SkillScreen::new);
+            MenuScreens.register(MenuTypeInit.BACKPACK.get(), BackpackScreen::new);
         });
         ItemPropertiesInit.addCustomItemProperties();
     }
